@@ -19,9 +19,9 @@ impl FormatNodeRule<JsTryFinallyStatement> for FormatJsTryFinallyStatement {
         write![f, [try_token.format(), space(), body.format()]]?;
 
         if let Some(catch_clause) = catch_clause {
-            write!(f, [space(), catch_clause.format()])?;
+            write!(f, [hard_line_break(), catch_clause.format()])?;
         }
 
-        write!(f, [space(), finally_clause.format()])
+        write!(f, [hard_line_break(), finally_clause.format()])
     }
 }

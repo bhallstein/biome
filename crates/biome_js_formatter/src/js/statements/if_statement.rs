@@ -10,7 +10,7 @@ pub(crate) struct FormatJsIfStatement;
 
 impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
     fn fmt_fields(&self, node: &JsIfStatement, f: &mut JsFormatter) -> FormatResult<()> {
-        use biome_js_syntax::AnyJsStatement::*;
+
 
         let JsIfStatementFields {
             if_token,
@@ -50,9 +50,7 @@ impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
                 .iter()
                 .any(|comment| comment.kind().is_line());
 
-            let else_on_same_line = matches!(consequent, JsBlockStatement(_))
-                && !trailing_line_comment
-                && !dangling_line_comment;
+            let else_on_same_line = false;
 
             if else_on_same_line {
                 write!(f, [space()])?;

@@ -3,7 +3,7 @@ use crate::prelude::*;
 use crate::utils::{FormatStatementBody, FormatStatementSemicolon};
 use biome_formatter::{format_args, write};
 use biome_js_syntax::JsDoWhileStatementFields;
-use biome_js_syntax::{AnyJsStatement, JsDoWhileStatement};
+use biome_js_syntax::JsDoWhileStatement;
 
 #[derive(Debug, Clone, Default)]
 pub(crate) struct FormatJsDoWhileStatement;
@@ -32,11 +32,7 @@ impl FormatNodeRule<JsDoWhileStatement> for FormatJsDoWhileStatement {
             ])]
         )?;
 
-        if matches!(body, AnyJsStatement::JsBlockStatement(_)) {
-            write!(f, [space()])?;
-        } else {
-            write!(f, [hard_line_break()])?;
-        }
+        write!(f, [hard_line_break()])?;
 
         write!(
             f,
