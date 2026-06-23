@@ -1,5 +1,13 @@
 # @biomejs/biome
 
+## 2.5.2
+
+### Patch Changes
+
+- [#10741](https://github.com/biomejs/biome/pull/10741) [`bd2364e`](https://github.com/biomejs/biome/commit/bd2364e3d077e3a77addcab6dbe127db38654e4a) Thanks [@JamBalaya56562](https://github.com/JamBalaya56562)! - Fixed [#6686](https://github.com/biomejs/biome/issues/6686): the `rage` command now respects the `--config-path` option and the `BIOME_CONFIG_PATH` environment variable when loading the Biome configuration. Previously it always used the default configuration resolution and reported the configuration as `Not set` when no `biome.json` existed in the working directory.
+
+- [#10734](https://github.com/biomejs/biome/pull/10734) [`4396496`](https://github.com/biomejs/biome/commit/43964961c88ca0f93ee83d10621844fa2dc7515c) Thanks [@BangDori](https://github.com/BangDori)! - Fixed [#10708](https://github.com/biomejs/biome/issues/10708): `biome migrate` now preserves trivia when migrating the deprecated `recommended` option to `preset`.
+
 ## 2.5.1
 
 ### Patch Changes
