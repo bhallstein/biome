@@ -174,3 +174,22 @@ fn nested_declaration_count_change_is_not_eq() {
         "different nested declaration counts should produce different models"
     );
 }
+
+#[test]
+fn value_change_is_not_equal() {
+    // Both declarations are `color: <GenericComponent>`, so the broken impl
+    // returns true even though the actual values differ.
+    let a = build_model("a { color: red; }");
+    let b = build_model("a { color: blue; }");
+    assert_ne!(a, b);
+}
+
+#[test]
+fn flat_vs_nested_rule_is_not_equal() {
+    // In `a`, both rules are top-level (parent_id = None for `.child`).
+    // In `b`, `.child` is nested inside `.parent` (parent_id = Some(parent_rule_id)).
+    // The broken impl considers them equal because selectors and declarations match.
+    let a = build_model(".parent { color: red; } .child { color: blue; }");
+    let b = build_model(".parent { color: red; .child { color: blue; } }");
+    assert_ne!(a, b);
+}

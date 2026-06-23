@@ -110,13 +110,9 @@ pub(crate) struct SemanticModelData {
 
 impl PartialEq for SemanticModel {
     fn eq(&self, other: &Self) -> bool {
-        self.data.all_rules.len() == other.data.all_rules.len()
-            && self
-                .data
-                .all_rules
-                .iter()
-                .zip(other.data.all_rules.iter())
-                .all(|(r1, r2)| r1 == r2)
+        self.data.all_rules == other.data.all_rules
+            && self.data.top_level_rule_ids == other.data.top_level_rule_ids
+            && self.data.range_to_rule_id == other.data.range_to_rule_id
             && self.global_custom_variables().len() == other.global_custom_variables().len()
             && self.global_custom_variables().iter().all(|(key, val)| {
                 other
@@ -164,6 +160,8 @@ impl PartialEq for Rule {
     fn eq(&self, other: &Self) -> bool {
         self.specificity == other.specificity
             && self.id == other.id
+            && self.parent_id == other.parent_id
+            && self.child_ids == other.child_ids
             && self.selectors.len() == other.selectors.len()
             && self
                 .selectors
@@ -611,10 +609,12 @@ pub enum CssPropertyInitialValue {
 
 impl PartialEq for CssPropertyInitialValue {
     fn eq(&self, other: &Self) -> bool {
-        matches!(self, Self::Composes(_)) == matches!(other, Self::Composes(_))
-            && matches!(self, Self::ScssExpression(_)) == matches!(other, Self::ScssExpression(_))
-            && matches!(self, Self::GenericComponent(_))
-                == matches!(other, Self::GenericComponent(_))
+        match (self, other) {
+            (Self::GenericComponent(a), Self::GenericComponent(b)) => a == b,
+            (Self::Composes(a), Self::Composes(b)) => a == b,
+            (Self::ScssExpression(a), Self::ScssExpression(b)) => a == b,
+            _ => false,
+        }
     }
 }
 
